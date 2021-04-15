@@ -58,7 +58,7 @@ letterIndex x = "Curry is awesome!" !! x
 --5
 rvrs :: String -> String
 rvrs s = concat [awesome, is, curry]
-	where
-		awesome = drop 9 s
-		curry = take 5 s
-		is = take 4 (drop 5 s)
+    where
+        awesome = drop 9 s
+        curry = take 5 s
+        is = take 4 (drop 5 s)

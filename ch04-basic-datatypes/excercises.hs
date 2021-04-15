@@ -58,7 +58,7 @@ f pair1 pair2 = ((snd pair1, snd pair2), (fst pair1, fst pair2))
 --1
 x = (+)
 g xs = w `x` 1
-	where w = length xs
+    where w = length xs
 
 --2
 myId = \x -> x
