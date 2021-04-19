@@ -116,18 +116,13 @@ myReverse :: [a] -> [a]
 myReverse []       = []
 myReverse (x : xs) = concat [(myReverse xs), [x]]
 
-myConcat :: [a] -> [a] -> [a]
-myConcat l1 l2 = revConcat (reverse l1) l2
-                    where revConcat [] l2      = l2
-                          revConcat (h : t) l2 = revConcat t (h : l2)
-
 squish :: [[a]] -> [a]
 squish []       = []
-squish (x : xs) = myConcat x (squish xs)
+squish (x : xs) = x ++ (squish xs)
 
 squishMap :: (a -> [b]) -> [a] -> [b]
 squishMap f []       = []
-squishMap f (x : xs) = myConcat (f x) (squishMap f xs)
+squishMap f (x : xs) = (f x) ++ (squishMap f xs)
 
 squishAgain :: [[a]] -> [a]
 squishAgain = squishMap id
