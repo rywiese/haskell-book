@@ -36,3 +36,41 @@ two = [ (x, y) | x <- mySqr, y <- myCube, x < 50, y < 50 ]
 
 -- 3
 three = length two
+
+
+-- Filtering
+
+-- 1
+-- filter (\x -> x `mod` 3 == 0) [1..30]
+
+-- 2
+-- (length . (filter (\x -> x `mod` 3 == 0))) [1..30]
+
+-- 3
+myFilter = filter (\word -> not (elem word ["an", "a", "the"])) . words
+
+
+-- Zipping
+
+-- 1
+myZip :: [a] -> [b] -> [(a, b)]
+myZip as bs =
+    case (as, bs) of
+        ([], _) -> []
+        (_, []) -> []
+        (aHead : aTail, bHead : bTail) -> (aHead, bHead) : myZip aTail bTail
+
+myZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+myZipWith f as bs =
+    case (as, bs) of
+        ([], _) -> []
+        (_, []) -> []
+        (aHead : aTail, bHead : bTail) -> f aHead bHead : myZipWith f aTail bTail
+
+myZipNew :: [a] -> [b] -> [(a, b)]
+myZipNew = myZipWith (\x y -> (x, y))
+
+
+-- Chapter excercises
+
+-- 1
