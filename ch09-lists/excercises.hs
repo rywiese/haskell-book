@@ -1,5 +1,7 @@
 module Excercises where
 
+import Data.Char
+
 -- Thy fearful symmetry
 
 -- 1
@@ -73,4 +75,81 @@ myZipNew = myZipWith (\x y -> (x, y))
 
 -- Chapter excercises
 
--- 1
+-- Data.Char
+filterUpper :: String -> String
+filterUpper = filter isUpper
+
+capitalize :: String -> String
+capitalize s =
+    case s of
+        "" -> ""
+        h : t -> toUpper h : t
+
+capitalizeAll :: String -> String
+capitalizeAll s =
+    case s of
+        "" -> ""
+        h : t -> toUpper h : capitalizeAll t
+
+capitalFirst :: String -> Char
+capitalFirst = toUpper . head
+
+
+-- Writing your own standard functions
+
+myOr :: [Bool] -> Bool
+myOr []       = False
+myOr (x : xs) = x || myOr xs
+
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny f []       = False
+myAny f (x : xs) = f x || myAny f xs
+
+myElem :: Eq a => a -> [a] -> Bool
+myElem e []       = False
+myElem e (x : xs) = e == x || myElem e xs
+
+myElemNew :: Eq a => a -> [a] -> Bool
+myElemNew e xs = any (==e) xs
+
+myReverse :: [a] -> [a]
+myReverse []       = []
+myReverse (x : xs) = concat [(myReverse xs), [x]]
+
+myConcat :: [a] -> [a] -> [a]
+myConcat l1 l2 = revConcat (reverse l1) l2
+                    where revConcat [] l2      = l2
+                          revConcat (h : t) l2 = revConcat t (h : l2)
+
+squish :: [[a]] -> [a]
+squish []       = []
+squish (x : xs) = myConcat x (squish xs)
+
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f []       = []
+squishMap f (x : xs) = myConcat (f x) (squishMap f xs)
+
+squishAgain :: [[a]] -> [a]
+squishAgain = squishMap id
+
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy f [x]      = x
+myMaximumBy f (x : xs) =
+    let maxOfRest = myMaximumBy f xs in
+        case f x maxOfRest of
+            GT -> x
+            _  -> maxOfRest
+
+flipOrder :: Ordering -> Ordering
+flipOrder LT = GT
+flipOrder EQ = EQ
+flipOrder GT = LT
+
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy f xs = myMaximumBy (curry (flipOrder . uncurry f)) xs
+
+myMaximum :: (Ord a) => [a] -> a
+myMaximum = myMaximumBy compare
+
+myMinimum :: (Ord a) => [a] -> a
+myMinimum = myMinimumBy compare
