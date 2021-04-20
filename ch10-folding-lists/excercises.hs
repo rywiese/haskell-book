@@ -18,6 +18,3 @@ f = foldr (flip const) 'a' [1..5]
 g = foldl const 0 "tacos"
 h = foldr (flip const) 0 "burritos"
 i = foldr (flip const) 'z' [1..5]
-
-
--- Database processing
