@@ -25,7 +25,7 @@ shiftChar char shift =
         if char `elem` ['A'..'Z'] then
             shiftCharWithOffset char shift (ord 'A')
         else if char `elem` ['a'..'z'] then
-           shiftCharWithOffset char shift (ord 'a')
+            shiftCharWithOffset char shift (ord 'a')
         else char
 
 -- Seems like there should be a std lib method to avoid this...
