@@ -54,3 +54,15 @@ charToButtonPresses phone char =
 
 stringToButtonPresses :: Phone -> String -> [(Digit, Presses)]
 stringToButtonPresses phone = concat . map (charToButtonPresses phone)
+
+fingerTaps :: [(Digit, Presses)] -> Presses
+fingerTaps = foldr (\(_, presses) previousPresses -> presses + previousPresses) 0
+
+--mostPopularLetter :: String -> Char
+-- this aint right. i've lost info by mapping fingerTaps. this can give me the most popular button, but not letter
+mostPopularLetter =
+    (maximumBy (\(_, p1) (_, p2) -> compare p1 p2)) .
+    (map (\list@((d, _):t)  -> (d, (fingerTaps list)))) .
+    (groupBy (\(d1, _) (d2, _) -> d1 == d2 )) .
+    (sortBy (\(d1, _) (d2, _) -> compare d1 d2 )) .
+    (stringToButtonPresses phone)
