@@ -83,4 +83,4 @@ sentences paragraph =
             Just sentence -> sentence:(sentences $ stripFirstSentence sentence paragraph)
             _ -> case find (isSuffixOf ".") (inits paragraph) of
                 Just sentence -> sentence:(sentences $ stripFirstSentence sentence paragraph)
-                _ -> []
+                _ -> [paragraph]
