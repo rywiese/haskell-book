@@ -60,7 +60,7 @@ fingerTaps = foldr (\(_, presses) previousPresses -> presses + previousPresses) 
 
 --mostPopularLetter :: String -> Char
 -- this aint right. i've lost info by mapping fingerTaps. this can give me the most popular button, but not letter
-mostPopularLetter =
+mostPopularLetterOld =
     (maximumBy (\(_, p1) (_, p2) -> compare p1 p2)) .
     (map (\list@((d, _):t)  -> (d, (fingerTaps list)))) .
     (groupBy (\(d1, _) (d2, _) -> d1 == d2 )) .
